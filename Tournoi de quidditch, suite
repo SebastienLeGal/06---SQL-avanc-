@@ -1,0 +1,39 @@
+mysql> select name,COUNT(team_id) as nb_player from player JOIN team on team.id
+= player.team_id group by team_id ORDER BY nb_player DESC;
++------------+-----------+
+| name       | nb_player |
++------------+-----------+
+| Gryffindor |        36 |
+| Slytherin  |        21 |
+| Ravenclaw  |        15 |
+| Hufflepuff |        12|
++------------+-----------+
+4 rows in set (0.01 sec)
+
+
+mysql> select name,COUNT(team_id) as nb_player from player JOIN team on team.id
+= player.team_id group by team_id HAVING nb_player >=14 ORDER BY name ASC;
++------------+-----------+
+| name       | nb_player |
++------------+-----------+
+| Gryffindor |        36 |
+| Ravenclaw  |        15 |
+| Slytherin  |        21 |
++------------+-----------+
+3 rows in set (0.01 sec)
+
+mysql> select firstname,enrollment_date,name from ((player JOIN wizard on wizard.id = player.wizard_id)
+JOIN team on team.id = player.team_id)   where dayofweek(enrollment_date) = 2 AND name='Gryffindor'
+ORDER BY enrollment_date ASC;
++-----------+-----------------+------------+
+| firstname | enrollment_date | name       |
++-----------+-----------------+------------+
+| George    | 1991-08-26      | Gryffindor |
+| Alice     | 1992-02-17      | Gryffindor |
+| Cadogan   | 1993-01-04      | Gryffindor |
+| Godric    | 1993-08-30      | Gryffindor |
+| Sirius    | 1994-01-10      | Gryffindor |
+| Aberforth | 1995-04-24      | Gryffindor |
+| Augusta   | 1999-10-25      | Gryffindor |
++-----------+-----------------+------------+
+7 rows in set (0.04 sec)
